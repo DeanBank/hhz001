@@ -1,0 +1,109 @@
+<DOCTYPE HTML>
+    <html>
+        <head>
+            <title>
+                最佳工作序列
+            </title>
+
+            <body>
+                
+
+                <script>
+                    main();
+                    function job(id,time,dead,profit){
+                        this.id 
+
+=id;
+                        this.time=time;
+                        this.dead=dead;
+                        this.profit=profit;
+                    }
+                    
+                    function main(){
+                        var jobarr = new Array();
+                        var job1 = new job('a', 4, 10, 2);
+                        var job2 = new job('b', 3, 8, 3 );
+                        var job3 = new job('c', 2, 4, 3 );
+                        var job4 = new job('d', 1, 2, 6);
+
+                        jobarr[0] = job1;
+                        jobarr[1] = job2;
+                        jobarr[2] = job3;
+                        jobarr[3] = job4;
+
+                    
+                       bubbleSort(jobarr);
+                       bestsq(jobarr);
+                    }
+
+                    function bubbleSort(jobarr) {
+                        var len = jobarr.length;
+                    
+                        for (var i = 0; i < len; i++) {
+                            for (var j = 0; j < len - 1 - i; j++) {
+                                if (jobarr[j].profit < jobarr[j+1].profit) {       
+                                    var temp = jobarr[j+1];        
+                                    jobarr[j+1] = jobarr[j];
+                                    jobarr[j] = temp;
+                                }
+                            }
+                        }
+                       
+                       for (var i = 0; i < len-1; i++) {
+                           if(jobarr[i].profit == jobarr[i+1].profit && jobarr[i+1].dead < jobarr[i].dead){
+                                var temp = jobarr[i+1];       
+                                jobarr[i+1] = jobarr[i];
+                                jobarr[i] = temp;
+                           }
+                       }
+
+                        return jobarr;
+                    }
+                    function bestsq(jobarr){
+                        var result =new Array();
+                        var deadtime;
+                        var time;
+                        var flag = 0;
+                        var len = jobarr.length;
+                        
+                        var timesum=0;
+                        for(var i=0;i<len;i++){
+                            timesum+=jobarr[i].time;
+                        }
+                        for(var i=0;i<timesum;i++){
+                            result[i]=-1;
+                        }
+                        
+                        for(var i=0;i<len;i++){
+                            deadtime=jobarr[i].dead-1;
+                            time=jobarr[i].time;
+                            if(result[deadtime]==-1){
+                                result[deadtime]=i;
+                                time--;
+                            }
+                            for(var j=deadtime-1;j>= 0;j--){
+                                if(!time){
+                                    break;
+                                }
+                                if(result[j]==-1){
+                                    result[j]=i;
+                                    time--;    
+                                }
+                            }
+                            if(time){
+                                document.write("工作" + jobarr[i].id + "无法完成！")
+                            }
+                        }
+
+                        for(var i=0;i<result.length;i++){
+                            document.write(result[i]);
+                            document.write(' ');
+                        }
+                    }
+                   
+
+                </script>
+            </body>
+        </head>
+    </html>
+</DOCTYPE>
